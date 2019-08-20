@@ -1,4 +1,5 @@
 edad = int(input("Digite su edad:"))
+nombre = input("Tu nombre:")
 
 if edad >= 18:
     num1 = int(input("Ingrese primer valor:"))
@@ -23,3 +24,10 @@ else:
 for taco in range(1, 10):
     print("Taco: "+str(taco))
 
+
+carros = ("VW", "Toyota", "Mazda", "Nissan")
+
+for i, carro in enumerate(carros):
+    print(str(i)+" - "+ carro)
+
+print("Adios!!! "+nombre+ ", tu nombre tiene ["+str(len(nombre))+"] de letras")
