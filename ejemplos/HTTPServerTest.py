@@ -2,6 +2,7 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 
 from io import BytesIO
 from urllib.parse import urlparse
+import simplejson
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
@@ -26,9 +27,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         response = BytesIO()
         response.write(b'This is POST request. ')
-        response.write(b'Size:' + bytes(content_length))
         response.write(b'Received: ')
-        response.write(body)
+        data = simplejson.loads(body)
+        response.write(str.encode('<br><b>calle: '+data['street']+'</b><br>'))
+        response.write(str.encode('<b>Codigo Postal: '+data['zipcode']+'</b><br>'))
         self.wfile.write(response.getvalue())
 
 
