@@ -1,13 +1,23 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 from io import BytesIO
+from urllib.parse import urlparse
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(b'Hello, world!')
+        query = urlparse(self.path).query
+        query_components = dict(qc.split("=") for qc in query.split("&"))
+        imsi = query_components["edad"]
+        if int(imsi) < 18:
+          self.wfile.write(b'<div style=\'color: blue;\'>So sorry, tas chavo!!</div>')
+        else:
+          self.wfile.write(b'<b>Hello, world!</b>')
+          self.wfile.write(str.encode('\n'+imsi))
+
+
 
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
